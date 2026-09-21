@@ -3,10 +3,10 @@ library(weathercan)
 library(sf)
 library(lutz)
 
-stations_search("Herschel Island")
-qhi <- weather_dl(station_ids = 1560, start = "2015-01-01", end = "2025-10-31")
+stations_search("Ivvavik")
+ivv <- weather_dl(station_ids = 26869, start = "2015-01-01", end = "2026-10-31")
 
-summer <- qhi %>%
+summer <- ivv %>%
   mutate(
     season = case_when(
       month %in% c("01", "02", "03", "04", "11", "12") ~ "winter",
