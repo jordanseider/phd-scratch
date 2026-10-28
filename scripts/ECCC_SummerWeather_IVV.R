@@ -4,7 +4,7 @@ library(sf)
 library(lutz)
 
 stations_search("Ivvavik")
-ivv <- weather_dl(station_ids = 26869, start = "2015-01-01", end = "2026-10-31")
+ivv <- weather_dl(station_ids = 26869, start = "2016-01-01", end = "2026-10-31")
 
 summer <- ivv %>%
   mutate(
@@ -16,8 +16,9 @@ summer <- ivv %>%
     )
   ) %>%
   filter(season == "summer" & !is.na(temp)) %>%
-  group_by(date) %>%
-  slice_max(order_by = temp, n = 1, with_ties = FALSE)
+  group_by(date, year) %>%
+  slice_max(order_by = temp, n = 3, with_ties = FALSE) %>% 
+  summarize(temp = mean(temp, na.rm = TRUE))
 
 (byyear <- summer %>%
   group_by(year) %>%
@@ -61,13 +62,13 @@ summer <- ivv %>%
     legend.title = element_text(size = 8)
   ))
 
-ggsave(
-  "./Figures/SummerHeat.png",
-  dataplot,
-  height = 4,
-  width = 7,
-  units = "in"
-)
+# ggsave(
+#   "./Figures/SummerHeat.png",
+#   dataplot,
+#   height = 4,
+#   width = 7,
+#   units = "in"
+# )
 
 
 ## Plot by percent fo days recorded
