@@ -4,7 +4,7 @@ library(sf)
 library(lutz)
 
 stations_search("Ivvavik")
-ivv <- weather_dl(station_ids = 26869, start = "2016-01-01", end = "2026-10-31")
+ivv <- weather_dl(station_ids = 26869, start = "2016-01-01", end = "2026-10-31") # Change station_id for correct weather station?
 
 summer <- ivv %>%
   mutate(
@@ -71,7 +71,7 @@ summer <- ivv %>%
 # )
 
 
-## Plot by percent fo days recorded
+## Plot by percent of days recorded
 (dataplot_pct <- byyear %>%
   pivot_longer(
     cols = c(pct_above_15, pct_above_20),
